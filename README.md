@@ -44,6 +44,12 @@ app/
 4. Lancer sur le Samsung S21 ou un émulateur.
 5. Ajuster les durées dans `WorkoutRepository.kt`.
 
+## CI
+
+Le workflow `Android build` compile l'APK debug et publie l'artefact `renforcement-gainage-debug-apk`.
+
+Relance CI : 2026-07-11 14:25.
+
 ## MVP
 
 - Jetpack Compose.
