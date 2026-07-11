@@ -39,7 +39,7 @@ jobs:
           ls -la "$ANDROID_HOME" || true
 
       - name: Build debug APK
-        run: gradle assembleDebug --stacktrace --info
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload debug APK
         if: success()
