@@ -15,7 +15,8 @@ data class WorkoutStep(
     val guidance: String,
     val tourLabel: String,
     val announceEverySeconds: Int? = null,
-    val announceAtSeconds: Set<Int> = emptySet()
+    val announceAtSeconds: Set<Int> = emptySet(),
+    val canSkip: Boolean = false
 )
 
 data class WorkoutUiState(
