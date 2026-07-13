@@ -37,7 +37,8 @@ class MainActivity : ComponentActivity() {
                 onStart = viewModel::start,
                 onPause = viewModel::pause,
                 onResume = viewModel::resume,
-                onStop = viewModel::stop
+                onStop = viewModel::stop,
+                onSkip = viewModel::skip
             )
         }
     }
