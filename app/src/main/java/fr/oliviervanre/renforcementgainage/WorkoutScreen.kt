@@ -30,7 +30,8 @@ fun WorkoutScreen(
     onStart: () -> Unit,
     onPause: () -> Unit,
     onResume: () -> Unit,
-    onStop: () -> Unit
+    onStop: () -> Unit,
+    onSkip: () -> Unit
 ) {
     val step = state.currentStep
     val total = step?.durationSeconds?.coerceAtLeast(1) ?: 1
@@ -40,6 +41,7 @@ fun WorkoutScreen(
         step?.type == StepType.REPS -> "${state.remainingSeconds} s restantes"
         else -> "${state.remainingSeconds} s"
     }
+    val canSkip = state.isRunning && !state.isPaused && step?.canSkip == true
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -138,7 +140,7 @@ fun WorkoutScreen(
                 } else {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         if (state.isPaused) {
                             Button(
@@ -147,7 +149,7 @@ fun WorkoutScreen(
                                     .weight(1f)
                                     .height(56.dp)
                             ) {
-                                Text("Reprendre", fontSize = 18.sp)
+                                Text("Reprendre", fontSize = 16.sp)
                             }
                         } else {
                             Button(
@@ -156,7 +158,18 @@ fun WorkoutScreen(
                                     .weight(1f)
                                     .height(56.dp)
                             ) {
-                                Text("Pause", fontSize = 18.sp)
+                                Text("Pause", fontSize = 16.sp)
+                            }
+                        }
+
+                        if (canSkip) {
+                            OutlinedButton(
+                                onClick = onSkip,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(56.dp)
+                            ) {
+                                Text("Passer", fontSize = 16.sp)
                             }
                         }
 
@@ -166,7 +179,7 @@ fun WorkoutScreen(
                                 .weight(1f)
                                 .height(56.dp)
                         ) {
-                            Text("Stop", fontSize = 18.sp)
+                            Text("Stop", fontSize = 16.sp)
                         }
                     }
                 }
