@@ -99,7 +99,7 @@ class WorkoutViewModel : ViewModel() {
                 isFinished = false
             )
 
-            speechManager?.speak(step.spokenInstruction)
+            speakInstructionThenStart(step)
 
             var remaining = step.durationSeconds
 
@@ -132,6 +132,17 @@ class WorkoutViewModel : ViewModel() {
         }
 
         finishRoutine()
+    }
+
+    private suspend fun speakInstructionThenStart(step: WorkoutStep) {
+        val speech = speechManager
+        speech?.speak(step.spokenInstruction)
+        delay(speech?.estimatedSpeechDurationMillis(step.spokenInstruction) ?: 2_500L)
+
+        if (step.type != StepType.REST && step.title != "Fin de séance") {
+            speech?.speak("Attention. Top.")
+            delay(1_200L)
+        }
     }
 
     private fun finishRoutine() {
