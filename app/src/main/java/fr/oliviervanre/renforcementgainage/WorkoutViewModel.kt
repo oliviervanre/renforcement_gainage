@@ -56,8 +56,10 @@ class WorkoutViewModel : ViewModel() {
         job?.cancel()
 
         job = viewModelScope.launch {
-            speechManager?.speak(PersiflageRepository.randomRemark())
-            delay(900)
+            val remark = PersiflageRepository.randomRemark()
+            val speech = speechManager
+            speech?.speak(remark)
+            delay(speech?.estimatedSpeechDurationMillis(remark) ?: 4_000L)
             runRoutineFrom(nextIndex)
         }
     }
