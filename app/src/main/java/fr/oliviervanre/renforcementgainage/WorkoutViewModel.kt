@@ -59,7 +59,7 @@ class WorkoutViewModel : ViewModel() {
             val remark = PersiflageRepository.randomRemark()
             val speech = speechManager
             speech?.speak(remark)
-            delay(speech?.estimatedSpeechDurationMillis(remark) ?: 4_000L)
+            delay(speech?.conservativeSpeechDurationMillis(remark) ?: 5_000L)
             runRoutineFrom(nextIndex)
         }
     }
@@ -137,7 +137,7 @@ class WorkoutViewModel : ViewModel() {
     private suspend fun speakInstructionThenStart(step: WorkoutStep) {
         val speech = speechManager
         speech?.speak(step.spokenInstruction)
-        delay(speech?.estimatedSpeechDurationMillis(step.spokenInstruction) ?: 2_500L)
+        delay(speech?.conservativeSpeechDurationMillis(step.spokenInstruction) ?: 3_500L)
 
         if (step.type != StepType.REST && step.title != "Fin de séance") {
             speech?.speak("Attention. Top.")
