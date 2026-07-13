@@ -120,23 +120,25 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Rowing",
-            spokenInstruction = "Rowing élastique ou haltères. Douze répétitions propres. Tirez les coudes vers l'arrière. Vous avez quarante secondes.",
+            spokenInstruction = "Rowing élastique ou haltères. Douze répétitions propres. Tirez les coudes vers l'arrière. Vous avez quarante secondes. Appuyez sur passer si vous n'avez pas le matériel.",
             durationSeconds = 40,
             objective = "12 répétitions",
-            guidance = "Rapprochez les omoplates. Épaules basses. Mouvement contrôlé.",
+            guidance = "Matériel nécessaire. Appuyez sur Passer si élastique ou haltères absents.",
             tourLabel = tour,
-            announceAtSeconds = setOf(10)
+            announceAtSeconds = setOf(10),
+            canSkip = true
         )
         steps += restStep(tour)
 
         steps += repsStep(
             title = "Épaules",
-            spokenInstruction = "Développé épaules léger. Dix répétitions propres. Pas de cambrure excessive. Vous avez trente-cinq secondes.",
+            spokenInstruction = "Développé épaules léger. Dix répétitions propres. Pas de cambrure excessive. Vous avez trente-cinq secondes. Appuyez sur passer si vous n'avez pas le matériel.",
             durationSeconds = 35,
             objective = "10 répétitions",
-            guidance = "Charge modérée. Abdos tenus. Arrêtez si gêne articulaire.",
+            guidance = "Matériel nécessaire. Appuyez sur Passer si charge adaptée absente.",
             tourLabel = tour,
-            announceAtSeconds = setOf(10)
+            announceAtSeconds = setOf(10),
+            canSkip = true
         )
     }
 
@@ -147,7 +149,8 @@ object WorkoutRepository {
         objective: String,
         guidance: String,
         tourLabel: String,
-        announceAtSeconds: Set<Int> = setOf(10)
+        announceAtSeconds: Set<Int> = setOf(10),
+        canSkip: Boolean = false
     ) = WorkoutStep(
         title = title,
         spokenInstruction = spokenInstruction,
@@ -156,7 +159,8 @@ object WorkoutRepository {
         objective = objective,
         guidance = guidance,
         tourLabel = tourLabel,
-        announceAtSeconds = announceAtSeconds
+        announceAtSeconds = announceAtSeconds,
+        canSkip = canSkip
     )
 
     private fun timedStep(
