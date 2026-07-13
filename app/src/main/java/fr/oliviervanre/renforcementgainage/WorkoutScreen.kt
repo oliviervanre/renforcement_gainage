@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -34,21 +35,24 @@ fun WorkoutScreen(
     val step = state.currentStep
     val total = step?.durationSeconds?.coerceAtLeast(1) ?: 1
     val progress = 1f - (state.remainingSeconds.toFloat() / total.toFloat())
+    val timeLabel = when {
+        state.isFinished -> "Terminé"
+        step?.type == StepType.REPS -> "${state.remainingSeconds} s restantes"
+        else -> "${state.remainingSeconds} s"
+    }
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarsPadding()
-                .padding(horizontal = 24.dp, vertical = 28.dp),
+                .padding(start = 24.dp, end = 24.dp, top = 20.dp, bottom = 32.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = "Renforcement Gainage",
@@ -56,26 +60,34 @@ fun WorkoutScreen(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(36.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = step?.title ?: "Prêt",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 36.sp
-                )
-
-                Spacer(modifier = Modifier.height(22.dp))
-
-                Text(
-                    text = if (state.isFinished) "Terminé" else "${state.remainingSeconds} s",
-                    fontSize = 68.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    text = step?.tourLabel ?: "Prêt",
+                    style = MaterialTheme.typography.labelLarge,
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(18.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = step?.title ?: "Prêt",
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 40.sp
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                Text(
+                    text = timeLabel,
+                    fontSize = 46.sp,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 50.sp
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 LinearProgressIndicator(
                     progress = { progress.coerceIn(0f, 1f) },
@@ -85,78 +97,78 @@ fun WorkoutScreen(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    text = state.nextStep?.let { "Suivant : ${it.title}" } ?: "Dernier exercice",
+                    text = step?.objective ?: "Appuyez sur Démarrer",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = step?.guidance ?: "Circuit principal, deux tours.",
                     style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 22.sp,
+                    modifier = Modifier.widthIn(max = 420.dp)
+                )
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                Text(
+                    text = state.nextStep?.let { "Suivant : ${it.title}" } ?: "Dernier exercice",
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center
                 )
             }
 
-            WorkoutActionButtons(
-                state = state,
-                onStart = onStart,
-                onPause = onPause,
-                onResume = onResume,
-                onStop = onStop
-            )
-        }
-    }
-}
-
-@Composable
-private fun WorkoutActionButtons(
-    state: WorkoutUiState,
-    onStart: () -> Unit,
-    onPause: () -> Unit,
-    onResume: () -> Unit,
-    onStop: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 28.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (!state.isRunning) {
-            Button(
-                onClick = onStart,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("Démarrer", fontSize = 18.sp)
-            }
-        } else {
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (state.isPaused) {
+                if (!state.isRunning) {
                     Button(
-                        onClick = onResume,
+                        onClick = onStart,
                         modifier = Modifier
-                            .weight(1f)
+                            .fillMaxWidth()
                             .height(56.dp)
                     ) {
-                        Text("Reprendre", fontSize = 18.sp)
+                        Text("Démarrer", fontSize = 18.sp)
                     }
                 } else {
-                    Button(
-                        onClick = onPause,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text("Pause", fontSize = 18.sp)
-                    }
-                }
+                        if (state.isPaused) {
+                            Button(
+                                onClick = onResume,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(56.dp)
+                            ) {
+                                Text("Reprendre", fontSize = 18.sp)
+                            }
+                        } else {
+                            Button(
+                                onClick = onPause,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(56.dp)
+                            ) {
+                                Text("Pause", fontSize = 18.sp)
+                            }
+                        }
 
-                OutlinedButton(
-                    onClick = onStop,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp)
-                ) {
-                    Text("Stop", fontSize = 18.sp)
+                        OutlinedButton(
+                            onClick = onStop,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(56.dp)
+                        ) {
+                            Text("Stop", fontSize = 18.sp)
+                        }
+                    }
                 }
             }
         }
