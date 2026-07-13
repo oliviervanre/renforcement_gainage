@@ -56,10 +56,7 @@ class WorkoutViewModel : ViewModel() {
         job?.cancel()
 
         job = viewModelScope.launch {
-            val remark = PersiflageRepository.randomRemark()
-            val speech = speechManager
-            speech?.speak(remark)
-            delay(speech?.conservativeSpeechDurationMillis(remark) ?: 5_000L)
+            speechManager?.speakAndWait(PersiflageRepository.randomRemark())
             runRoutineFrom(nextIndex)
         }
     }
@@ -126,8 +123,7 @@ class WorkoutViewModel : ViewModel() {
             }
 
             if (index < routine.lastIndex) {
-                speechManager?.speak("Stop.")
-                delay(500)
+                speechManager?.speakAndWait("Stop.")
             }
         }
 
@@ -136,12 +132,10 @@ class WorkoutViewModel : ViewModel() {
 
     private suspend fun speakInstructionThenStart(step: WorkoutStep) {
         val speech = speechManager
-        speech?.speak(step.spokenInstruction)
-        delay(speech?.conservativeSpeechDurationMillis(step.spokenInstruction) ?: 3_500L)
+        speech?.speakAndWait(step.spokenInstruction)
 
         if (step.type != StepType.REST && step.title != "Fin de séance") {
-            speech?.speak("Attention. Top.")
-            delay(1_200L)
+            speech?.speakAndWait("Attention. Top.")
         }
     }
 
