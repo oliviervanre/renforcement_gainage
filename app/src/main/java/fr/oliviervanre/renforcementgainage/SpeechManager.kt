@@ -38,6 +38,11 @@ class SpeechManager(context: Context) : TextToSpeech.OnInitListener {
         return (spokenMillis + 900L).coerceIn(2_200L, 7_500L)
     }
 
+    fun conservativeSpeechDurationMillis(text: String): Long {
+        val base = estimatedSpeechDurationMillis(text)
+        return (base * 1.35).roundToLong().plus(1_200L).coerceIn(3_000L, 11_000L)
+    }
+
     fun stop() {
         tts?.stop()
     }
