@@ -11,7 +11,11 @@ data class WorkoutStep(
     val spokenInstruction: String,
     val type: StepType,
     val durationSeconds: Int,
-    val announceEverySeconds: Int? = null
+    val objective: String,
+    val guidance: String,
+    val tourLabel: String,
+    val announceEverySeconds: Int? = null,
+    val announceAtSeconds: Set<Int> = emptySet()
 )
 
 data class WorkoutUiState(
