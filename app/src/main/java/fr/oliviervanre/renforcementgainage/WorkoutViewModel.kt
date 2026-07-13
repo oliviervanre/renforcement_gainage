@@ -92,21 +92,23 @@ class WorkoutViewModel : ViewModel() {
                 delay(1000)
                 remaining--
 
-                val shouldAnnounce =
+                val shouldAnnounceByInterval =
                     step.announceEverySeconds != null &&
                         remaining > 0 &&
                         remaining % step.announceEverySeconds == 0
 
-                if (shouldAnnounce) {
-                    speechManager?.speak("$remaining secondes restantes")
+                val shouldAnnounceByMarker = remaining in step.announceAtSeconds
+
+                if (shouldAnnounceByInterval || shouldAnnounceByMarker) {
+                    speechManager?.speak("Encore $remaining secondes.")
                 }
 
                 _uiState.value = _uiState.value.copy(remainingSeconds = remaining)
             }
 
-            routine.getOrNull(index + 1)?.let { next ->
-                speechManager?.speak("Prochain exercice : ${next.title}.")
-                delay(800)
+            if (index < routine.lastIndex) {
+                speechManager?.speak("Stop.")
+                delay(500)
             }
         }
 
