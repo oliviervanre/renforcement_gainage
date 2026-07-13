@@ -31,19 +31,8 @@ class WorkoutViewModel : ViewModel() {
 
     fun start() {
         if (_uiState.value.isRunning) return
-
         job?.cancel()
-        _uiState.value = WorkoutUiState(
-            currentStepIndex = 0,
-            currentStep = routine.firstOrNull(),
-            nextStep = routine.getOrNull(1),
-            remainingSeconds = routine.firstOrNull()?.durationSeconds ?: 0,
-            isRunning = true
-        )
-
-        job = viewModelScope.launch {
-            runRoutine()
-        }
+        launchRoutineFrom(0)
     }
 
     fun pause() {
@@ -58,6 +47,21 @@ class WorkoutViewModel : ViewModel() {
         speechManager?.speak("Reprise.")
     }
 
+    fun skip() {
+        val state = _uiState.value
+        val step = state.currentStep ?: return
+        if (!state.isRunning || state.isPaused || !step.canSkip) return
+
+        val nextIndex = state.currentStepIndex + 1
+        job?.cancel()
+
+        job = viewModelScope.launch {
+            speechManager?.speak(PersiflageRepository.randomRemark())
+            delay(900)
+            runRoutineFrom(nextIndex)
+        }
+    }
+
     fun stop() {
         job?.cancel()
         speechManager?.stop()
@@ -68,8 +72,21 @@ class WorkoutViewModel : ViewModel() {
         )
     }
 
-    private suspend fun runRoutine() {
-        routine.forEachIndexed { index, step ->
+    private fun launchRoutineFrom(startIndex: Int) {
+        job = viewModelScope.launch {
+            runRoutineFrom(startIndex)
+        }
+    }
+
+    private suspend fun runRoutineFrom(startIndex: Int) {
+        if (startIndex !in routine.indices) {
+            finishRoutine()
+            return
+        }
+
+        for (index in startIndex..routine.lastIndex) {
+            val step = routine[index]
+
             _uiState.value = _uiState.value.copy(
                 currentStepIndex = index,
                 currentStep = step,
@@ -112,6 +129,10 @@ class WorkoutViewModel : ViewModel() {
             }
         }
 
+        finishRoutine()
+    }
+
+    private fun finishRoutine() {
         _uiState.value = _uiState.value.copy(
             isRunning = false,
             isPaused = false,
