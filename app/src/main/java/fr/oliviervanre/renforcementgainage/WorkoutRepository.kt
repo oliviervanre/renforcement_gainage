@@ -54,32 +54,34 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Pompes",
-            spokenInstruction = "Pompes inclinées ou classiques. Objectif : dix répétitions propres. Vous avez quarante-cinq secondes. Pas de précipitation.",
-            durationSeconds = 45,
+            spokenInstruction = "Pompes inclinées ou classiques. Objectif : dix répétitions propres. Vous avez trente secondes. Pas de précipitation.",
+            durationSeconds = 30,
             objective = "10 répétitions propres",
             guidance = "Corps gainé. Amplitude propre. Variante inclinée si nécessaire.",
-            tourLabel = tour
+            tourLabel = tour,
+            announceAtSeconds = setOf(10)
         )
         steps += restStep(tour)
 
         steps += repsStep(
             title = "Squats",
-            spokenInstruction = "Squats. Quinze répétitions propres. Descente contrôlée, genoux dans l'axe. Vous avez cinquante secondes.",
-            durationSeconds = 50,
+            spokenInstruction = "Squats. Quinze répétitions propres. Descente contrôlée, genoux dans l'axe. Vous avez quarante secondes.",
+            durationSeconds = 40,
             objective = "15 répétitions",
             guidance = "Dos tenu. Appui sur tout le pied. Remontez sans vous précipiter.",
-            tourLabel = tour
+            tourLabel = tour,
+            announceAtSeconds = setOf(10)
         )
         steps += restStep(tour)
 
         steps += repsStep(
             title = "Fentes",
-            spokenInstruction = "Fentes. Huit à dix par jambe. Buste droit. Vous avez soixante-quinze secondes.",
-            durationSeconds = 75,
+            spokenInstruction = "Fentes. Huit à dix par jambe. Buste droit. Vous avez soixante secondes.",
+            durationSeconds = 60,
             objective = "8 à 10 par jambe",
             guidance = "Pas trop long. Contrôle à la descente. Faites moins si la technique se dégrade.",
             tourLabel = tour,
-            announceAtSeconds = setOf(30, 15)
+            announceAtSeconds = setOf(20, 10)
         )
         steps += restStep(tour)
 
@@ -118,21 +120,23 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Rowing",
-            spokenInstruction = "Rowing élastique ou haltères. Douze répétitions propres. Tirez les coudes vers l'arrière. Vous avez quarante-cinq secondes.",
-            durationSeconds = 45,
+            spokenInstruction = "Rowing élastique ou haltères. Douze répétitions propres. Tirez les coudes vers l'arrière. Vous avez quarante secondes.",
+            durationSeconds = 40,
             objective = "12 répétitions",
             guidance = "Rapprochez les omoplates. Épaules basses. Mouvement contrôlé.",
-            tourLabel = tour
+            tourLabel = tour,
+            announceAtSeconds = setOf(10)
         )
         steps += restStep(tour)
 
         steps += repsStep(
             title = "Épaules",
-            spokenInstruction = "Développé épaules léger. Dix répétitions propres. Pas de cambrure excessive. Vous avez quarante-cinq secondes.",
-            durationSeconds = 45,
+            spokenInstruction = "Développé épaules léger. Dix répétitions propres. Pas de cambrure excessive. Vous avez trente-cinq secondes.",
+            durationSeconds = 35,
             objective = "10 répétitions",
             guidance = "Charge modérée. Abdos tenus. Arrêtez si gêne articulaire.",
-            tourLabel = tour
+            tourLabel = tour,
+            announceAtSeconds = setOf(10)
         )
     }
 
@@ -143,7 +147,7 @@ object WorkoutRepository {
         objective: String,
         guidance: String,
         tourLabel: String,
-        announceAtSeconds: Set<Int> = setOf(15)
+        announceAtSeconds: Set<Int> = setOf(10)
     ) = WorkoutStep(
         title = title,
         spokenInstruction = spokenInstruction,
