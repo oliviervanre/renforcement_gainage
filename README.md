@@ -1,6 +1,6 @@
 # Renforcement Gainage
 
-Version actuelle : **0.2.0**
+Version actuelle : **0.2.1**
 
 Application Android Kotlin locale, volontairement simple, destinée à lancer une routine courte de renforcement musculaire et de gainage avec guidage vocal.
 
@@ -56,7 +56,7 @@ Fenêtre : 30 secondes
 Consigne : corps gainé, amplitude propre, variante inclinée si nécessaire
 ```
 
-Les exercices avec haltère sont désormais traités séparément par côté, pour éviter un changement droite/gauche trop précipité.
+Les exercices avec haltère sont traités séparément par côté, pour éviter un changement droite/gauche trop précipité.
 
 ## Routine actuelle
 
@@ -122,6 +122,18 @@ Rowing : appui main + genou opposés, dos plat, coude vers la hanche.
 
 Le choix retenu est de privilégier le geste propre et contrôlé, surtout en fin de circuit, plutôt que d'augmenter trop vite l'intensité.
 
+## Ajustements UX de la version 0.2.1
+
+Ajustements issus des captures sur téléphone :
+
+- titre de l'application descendu pour éviter le conflit visuel avec la caméra frontale ;
+- titre légèrement plus discret ;
+- barre de progression épaissie à `6.dp` ;
+- boutons d'action légèrement remontés ;
+- libellé supérieur de la préparation remplacé par `Avant séance`, afin d'éviter la répétition `Préparation / Préparation`.
+
+Ces changements ne modifient pas la routine sportive ; ils améliorent seulement la lisibilité et l'ergonomie.
+
 ## Guidage vocal
 
 Le guidage vocal utilise le moteur Android `TextToSpeech` en français.
@@ -174,14 +186,14 @@ Les remarques sont stockées dans `PersiflageRepository.kt` sous forme encodée 
 Le numéro de version est défini dans `app/build.gradle.kts` :
 
 ```kotlin
-versionCode = 2
-versionName = "0.2.0"
+versionCode = 3
+versionName = "0.2.1"
 ```
 
 L'écran principal affiche discrètement :
 
 ```text
-v0.2.0
+v0.2.1
 ```
 
 Ce repère permet de vérifier rapidement quelle APK est installée sur le téléphone lors des tests.
@@ -339,8 +351,8 @@ Configuration principale :
 compileSdk = 35
 minSdk = 26
 targetSdk = 35
-versionCode = 2
-versionName = 0.2.0
+versionCode = 3
+versionName = 0.2.1
 ```
 
 Package Android :
@@ -427,6 +439,9 @@ Non inclus volontairement à ce stade :
 - durée de pause entre les tours ;
 - choix du nombre de tours : 1 / 2 / 3 ;
 - mode Express / Standard / Complet ;
+- rappel vocal toutes les 10 secondes sur les gainages longs ;
+- messages d'encouragement aléatoires, rares et courts ;
+- consigne fentes plus explicite : fentes arrière, 6 à 8 par côté ;
 - réglage discret du style vocal des remarques ;
 - icône d'application personnalisée ;
 - historique minimal des versions testées.
