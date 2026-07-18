@@ -12,7 +12,7 @@ object WorkoutRepository {
             durationSeconds = 15,
             objective = "Se placer",
             guidance = "Respirez calmement. Préparez le premier exercice.",
-            tourLabel = "Préparation",
+            tourLabel = "Avant séance",
             announceAtSeconds = setOf(5)
         )
 
