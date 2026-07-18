@@ -1,5 +1,7 @@
 # Renforcement Gainage
 
+Version actuelle : **0.2.0**
+
 Application Android Kotlin locale, volontairement simple, destinée à lancer une routine courte de renforcement musculaire et de gainage avec guidage vocal.
 
 L'objectif n'est pas de produire une application sportive générique, mais une application d'adhérence : poser le téléphone, appuyer sur **Démarrer**, suivre les consignes, terminer la séance sans friction.
@@ -12,11 +14,13 @@ L'application guide une séance de renforcement adaptée à un usage personnel :
 - deux tours par défaut ;
 - exercices à répétitions guidés par objectif + fenêtre de temps ;
 - exercices de gainage guidés au chrono ;
+- exercices unilatéraux avec haltère en fin de circuit ;
 - récupérations automatiques ;
 - consignes vocales en français ;
 - écran maintenu allumé pendant la séance ;
 - boutons simples : **Démarrer**, **Pause**, **Reprendre**, **Stop** ;
-- bouton **Passer** uniquement sur les exercices nécessitant du matériel.
+- bouton **Passer** uniquement sur les exercices nécessitant du matériel ;
+- numéro de version affiché discrètement en bas de l'écran.
 
 ## Principes de conception
 
@@ -39,8 +43,8 @@ Deux catégories d'exercices sont distinguées :
 1. **Exercices chronométrés** : gainage frontal, gainage latéral, récupérations.
    L'application pilote strictement le temps et annonce les repères utiles.
 
-2. **Exercices à répétitions** : pompes, squats, fentes, rowing, développé épaules.
-   L'application annonce un objectif de répétitions et laisse une fenêtre de temps confortable.
+2. **Exercices à répétitions dans une fenêtre de temps** : pompes, squats, fentes, rowing, développé épaules.
+   L'application annonce un objectif qualitatif et laisse une fenêtre de temps confortable.
    Elle ne compte pas les répétitions vocalement, afin de préserver la qualité du geste.
 
 Exemple de logique :
@@ -51,6 +55,8 @@ Objectif : 10 répétitions propres
 Fenêtre : 30 secondes
 Consigne : corps gainé, amplitude propre, variante inclinée si nécessaire
 ```
+
+Les exercices avec haltère sont désormais traités séparément par côté, pour éviter un changement droite/gauche trop précipité.
 
 ## Routine actuelle
 
@@ -81,12 +87,40 @@ Gainage gauche
 Récupération
 Gainage droit
 Récupération
-Rowing
+Rowing droit
+Changement de côté
+Rowing gauche
 Récupération
-Épaules
+Épaule droite
+Changement de côté
+Épaule gauche
 ```
 
-Les exercices `Rowing` et `Épaules` sont marqués comme optionnels avec `canSkip = true`, car ils nécessitent du matériel.
+Les exercices `Rowing droit`, `Rowing gauche`, `Épaule droite` et `Épaule gauche` sont marqués comme optionnels avec `canSkip = true`, car ils nécessitent une haltère ou une charge adaptée.
+
+## Réglage sportif de la version 0.2.0
+
+Ajustements issus du premier test en conditions réelles :
+
+```text
+Rowing droit : 25 secondes
+Changement de côté : 15 secondes
+Rowing gauche : 25 secondes
+Récupération : 25 secondes
+
+Épaule droite : 25 secondes
+Changement de côté : 15 secondes
+Épaule gauche : 25 secondes
+```
+
+Consignes intégrées :
+
+```text
+Rowing : appui main + genou opposés, dos plat, coude vers la hanche.
+Épaule : haltère à l'épaule, pousser au-dessus de la tête sans cambrer.
+```
+
+Le choix retenu est de privilégier le geste propre et contrôlé, surtout en fin de circuit, plutôt que d'augmenter trop vite l'intensité.
 
 ## Guidage vocal
 
@@ -99,9 +133,10 @@ Séquence d'un exercice :
 ```text
 1. annonce complète de l'exercice
 2. attente de fin réelle du TextToSpeech
-3. annonce "Attention. Top."
-4. attente de fin réelle du TextToSpeech
-5. démarrage du chrono
+3. courte latence d'environ 900 ms
+4. annonce "Attention. Top."
+5. attente de fin réelle du TextToSpeech
+6. démarrage du chrono
 ```
 
 Cela évite les coupures du type :
@@ -110,6 +145,8 @@ Cela évite les coupures du type :
 "Vous avez quar... Attention. Top."
 ```
 
+La courte latence avant `Attention. Top.` laisse le temps de se placer physiquement avant le départ du chrono.
+
 ## Bouton Passer et remarques vocales
 
 Certains exercices peuvent être sautés lorsqu'ils nécessitent du matériel.
@@ -117,8 +154,10 @@ Certains exercices peuvent être sautés lorsqu'ils nécessitent du matériel.
 Actuellement :
 
 ```text
-Rowing
-Épaules
+Rowing droit
+Rowing gauche
+Épaule droite
+Épaule gauche
 ```
 
 Quand l'utilisateur appuie sur **Passer**, l'application :
@@ -129,6 +168,23 @@ Quand l'utilisateur appuie sur **Passer**, l'application :
 4. reprend à l'étape suivante.
 
 Les remarques sont stockées dans `PersiflageRepository.kt` sous forme encodée en Base64. Ce n'est pas une protection cryptographique ; c'est seulement destiné à éviter de lire directement les phrases dans le code.
+
+## Version affichée dans l'application
+
+Le numéro de version est défini dans `app/build.gradle.kts` :
+
+```kotlin
+versionCode = 2
+versionName = "0.2.0"
+```
+
+L'écran principal affiche discrètement :
+
+```text
+v0.2.0
+```
+
+Ce repère permet de vérifier rapidement quelle APK est installée sur le téléphone lors des tests.
 
 ## Structure technique
 
@@ -221,6 +277,7 @@ Responsabilités :
 - décrémenter le chrono ;
 - déclencher les annonces vocales ;
 - attendre la fin réelle du TextToSpeech avant de démarrer le chrono ;
+- ajouter une courte latence avant le signal de départ ;
 - gérer le bouton **Passer**.
 
 ### `WorkoutScreen.kt`
@@ -237,7 +294,8 @@ Affiche :
 - objectif ;
 - consigne courte ;
 - exercice suivant ;
-- boutons d'action.
+- boutons d'action ;
+- version discrète de l'application.
 
 Le bouton **Passer** n'apparaît que si l'étape courante a `canSkip = true`.
 
@@ -281,6 +339,8 @@ Configuration principale :
 compileSdk = 35
 minSdk = 26
 targetSdk = 35
+versionCode = 2
+versionName = 0.2.0
 ```
 
 Package Android :
@@ -328,7 +388,7 @@ Méthode simple sans câble :
 5. autoriser temporairement l'installation depuis cette source si Android le demande ;
 6. installer.
 
-Tant que le package reste identique, Android traite les APK suivants comme des mises à jour.
+Tant que le package reste identique et que le `versionCode` augmente, Android traite les APK suivants comme des mises à jour.
 
 ## GitHub Actions
 
@@ -368,6 +428,7 @@ Non inclus volontairement à ce stade :
 - choix du nombre de tours : 1 / 2 / 3 ;
 - mode Express / Standard / Complet ;
 - réglage discret du style vocal des remarques ;
-- icône d'application personnalisée.
+- icône d'application personnalisée ;
+- historique minimal des versions testées.
 
 Le principe directeur reste le même : ne pas transformer une application d'adhérence en cockpit.
