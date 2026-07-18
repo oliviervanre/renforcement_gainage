@@ -119,11 +119,23 @@ object WorkoutRepository {
         steps += restStep(tour)
 
         steps += repsStep(
-            title = "Rowing",
-            spokenInstruction = "Rowing élastique ou haltères. Douze répétitions propres. Tirez les coudes vers l'arrière. Vous avez quarante secondes. Appuyez sur passer si vous n'avez pas le matériel.",
-            durationSeconds = 40,
-            objective = "12 répétitions",
-            guidance = "Matériel nécessaire. Appuyez sur Passer si élastique ou haltères absents.",
+            title = "Rowing droit",
+            spokenInstruction = "Rowing côté droit. Main gauche et genou gauche en appui, dos plat. Haltère dans la main droite. Tirez le coude droit vers la hanche. Vingt-cinq secondes.",
+            durationSeconds = 25,
+            objective = "Geste propre côté droit",
+            guidance = "Dos plat. Le coude recule vers la hanche. Pas d'élan, pas de tirage de biceps.",
+            tourLabel = tour,
+            announceAtSeconds = setOf(10),
+            canSkip = true
+        )
+        steps += shortRestStep(tour)
+
+        steps += repsStep(
+            title = "Rowing gauche",
+            spokenInstruction = "Rowing côté gauche. Main droite et genou droit en appui, dos plat. Haltère dans la main gauche. Tirez le coude gauche vers la hanche. Vingt-cinq secondes.",
+            durationSeconds = 25,
+            objective = "Geste propre côté gauche",
+            guidance = "Même consigne. Dos stable. Tirage contrôlé, coude vers la hanche.",
             tourLabel = tour,
             announceAtSeconds = setOf(10),
             canSkip = true
@@ -131,11 +143,23 @@ object WorkoutRepository {
         steps += restStep(tour)
 
         steps += repsStep(
-            title = "Épaules",
-            spokenInstruction = "Développé épaules léger. Dix répétitions propres. Pas de cambrure excessive. Vous avez trente-cinq secondes. Appuyez sur passer si vous n'avez pas le matériel.",
-            durationSeconds = 35,
-            objective = "10 répétitions",
-            guidance = "Matériel nécessaire. Appuyez sur Passer si charge adaptée absente.",
+            title = "Épaule droite",
+            spokenInstruction = "Développé épaule droite. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Vingt-cinq secondes. Mouvement propre et contrôlé.",
+            durationSeconds = 25,
+            objective = "Pousser proprement côté droit",
+            guidance = "Abdos serrés. Ne cambrez pas. Contrôlez la descente jusqu'à l'épaule.",
+            tourLabel = tour,
+            announceAtSeconds = setOf(10),
+            canSkip = true
+        )
+        steps += shortRestStep(tour)
+
+        steps += repsStep(
+            title = "Épaule gauche",
+            spokenInstruction = "Développé épaule gauche. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Vingt-cinq secondes. Gardez le buste stable.",
+            durationSeconds = 25,
+            objective = "Pousser proprement côté gauche",
+            guidance = "Même consigne. Buste stable, pas de compensation avec le dos.",
             tourLabel = tour,
             announceAtSeconds = setOf(10),
             canSkip = true
@@ -191,5 +215,16 @@ object WorkoutRepository {
         guidance = "Respirez. Préparez l'exercice suivant.",
         tourLabel = tourLabel,
         announceAtSeconds = setOf(10)
+    )
+
+    private fun shortRestStep(tourLabel: String) = WorkoutStep(
+        title = "Changement de côté",
+        spokenInstruction = "Changez de côté. Quinze secondes.",
+        type = StepType.REST,
+        durationSeconds = 15,
+        objective = "15 secondes",
+        guidance = "Replacez-vous proprement avant de repartir.",
+        tourLabel = tourLabel,
+        announceAtSeconds = setOf(5)
     )
 }
