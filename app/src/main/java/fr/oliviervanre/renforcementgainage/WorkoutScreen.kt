@@ -48,7 +48,7 @@ fun WorkoutScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarsPadding()
-                .padding(start = 24.dp, end = 24.dp, top = 20.dp, bottom = 32.dp),
+                .padding(start = 24.dp, end = 24.dp, top = 42.dp, bottom = 56.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -58,11 +58,11 @@ fun WorkoutScreen(
             ) {
                 Text(
                     text = "Renforcement Gainage",
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
                     text = step?.tourLabel ?: "Prêt",
@@ -93,7 +93,9 @@ fun WorkoutScreen(
 
                 LinearProgressIndicator(
                     progress = { progress.coerceIn(0f, 1f) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(6.dp)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
