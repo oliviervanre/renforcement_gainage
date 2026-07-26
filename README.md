@@ -2,6 +2,8 @@
 
 Version actuelle : **0.2.1**
 
+Prochaine mise à jour préparée : **0.2.2**
+
 Application Android Kotlin locale, volontairement simple, destinée à lancer une routine courte de renforcement musculaire et de gainage avec guidage vocal.
 
 L'objectif n'est pas de produire une application sportive générique, mais une application d'adhérence : poser le téléphone, appuyer sur **Démarrer**, suivre les consignes, terminer la séance sans friction.
@@ -51,14 +53,14 @@ Exemple de logique :
 
 ```text
 Pompes
-Objectif : 10 répétitions propres
+Objectif : 12 à 15 répétitions propres
 Fenêtre : 30 secondes
 Consigne : corps gainé, amplitude propre, variante inclinée si nécessaire
 ```
 
-Les exercices avec haltère sont traités séparément par côté, pour éviter un changement droite/gauche trop précipité.
+Les exercices unilatéraux sont traités séparément par côté quand cela améliore la qualité du geste ou évite un changement droite/gauche trop précipité.
 
-## Routine actuelle
+## Routine actuelle — version 0.2.1
 
 La routine est définie dans `WorkoutRepository.kt`.
 
@@ -72,7 +74,7 @@ Tour 2 / 2
 Fin de séance
 ```
 
-Circuit d'un tour :
+Circuit d'un tour en version 0.2.1 :
 
 ```text
 Pompes
@@ -133,6 +135,56 @@ Ajustements issus des captures sur téléphone :
 - libellé supérieur de la préparation remplacé par `Avant séance`, afin d'éviter la répétition `Préparation / Préparation`.
 
 Ces changements ne modifient pas la routine sportive ; ils améliorent seulement la lisibilité et l'ergonomie.
+
+## Préparation de la version 0.2.2
+
+La version 0.2.2 est destinée à intégrer les observations de séance sans bouleverser le programme. Les temps de récupération, les décomptes de pause et les autres paramètres non mentionnés ci-dessous restent inchangés.
+
+Ajustements prévus :
+
+```text
+Pompes
+- durée inchangée : 30 secondes
+- objectif affiché/vocal : 12 à 15 répétitions propres
+
+Fentes
+- remplacement du bloc unique de 60 secondes
+- fentes côté droit : 30 secondes
+- annonce unique à 15 secondes restantes
+- changement de côté : 10 secondes
+- fentes côté gauche : 30 secondes
+- annonce unique à 15 secondes restantes
+- objectif : 10 répétitions par jambe
+
+Gainage frontal
+- passage de 35 à 40 secondes
+- repères vocaux à 30 / 20 / 10 secondes restantes
+
+Gainages latéraux
+- inchangés : 25 secondes par côté
+
+Rowing
+- durée inchangée : 25 secondes par côté
+- objectif affiché/vocal : 15 répétitions par bras
+
+Développé épaule
+- durée inchangée : 25 secondes par côté
+- objectif affiché/vocal : 10 répétitions par bras
+```
+
+Les squats ne font pas partie des évolutions prévues : le réglage actuel reste adapté, avec 15 répétitions propres dans une fenêtre de 40 secondes.
+
+Consignes vocales envisagées pour les fentes :
+
+```text
+Fentes côté droit. Dix répétitions. Trente secondes. Pied droit devant, jambe gauche en arrière. Buste droit, genou dans l'axe.
+
+Changez de côté. Dix secondes.
+
+Fentes côté gauche. Dix répétitions. Trente secondes. Pied gauche devant, jambe droite en arrière. Même contrôle.
+```
+
+Le principe de cette mise à jour est de clarifier les objectifs réellement pratiqués, de mieux guider les fentes et d'ajouter une progression limitée sur le gainage frontal.
 
 ## Guidage vocal
 
@@ -197,6 +249,13 @@ v0.2.1
 ```
 
 Ce repère permet de vérifier rapidement quelle APK est installée sur le téléphone lors des tests.
+
+Pour la prochaine mise à jour, le passage prévu sera :
+
+```kotlin
+versionCode = 4
+versionName = "0.2.2"
+```
 
 ## Structure technique
 
@@ -272,7 +331,7 @@ Exemple :
 
 ```kotlin
 durationSeconds = 30,
-objective = "10 répétitions propres",
+objective = "12 à 15 répétitions propres",
 guidance = "Corps gainé. Amplitude propre. Variante inclinée si nécessaire.",
 announceAtSeconds = setOf(10)
 ```
@@ -345,7 +404,7 @@ Les phrases sont encodées en Base64 et décodées au moment de l'exécution.
 
 ## Configuration Android
 
-Configuration principale :
+Configuration principale actuelle :
 
 ```text
 compileSdk = 35
@@ -353,6 +412,13 @@ minSdk = 26
 targetSdk = 35
 versionCode = 3
 versionName = 0.2.1
+```
+
+Configuration prévue pour la prochaine mise à jour :
+
+```text
+versionCode = 4
+versionName = 0.2.2
 ```
 
 Package Android :
@@ -439,9 +505,7 @@ Non inclus volontairement à ce stade :
 - durée de pause entre les tours ;
 - choix du nombre de tours : 1 / 2 / 3 ;
 - mode Express / Standard / Complet ;
-- rappel vocal toutes les 10 secondes sur les gainages longs ;
 - messages d'encouragement aléatoires, rares et courts ;
-- consigne fentes plus explicite : fentes arrière, 6 à 8 par côté ;
 - réglage discret du style vocal des remarques ;
 - icône d'application personnalisée ;
 - historique minimal des versions testées.
