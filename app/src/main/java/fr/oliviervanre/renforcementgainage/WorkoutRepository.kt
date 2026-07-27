@@ -54,9 +54,9 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Pompes",
-            spokenInstruction = "Pompes inclinées ou classiques. Objectif : dix répétitions propres. Vous avez trente secondes. Pas de précipitation.",
+            spokenInstruction = "Pompes inclinées ou classiques. Objectif : douze à quinze répétitions propres. Vous avez trente secondes. Corps gainé, pas de précipitation.",
             durationSeconds = 30,
-            objective = "10 répétitions propres",
+            objective = "12 à 15 répétitions propres",
             guidance = "Corps gainé. Amplitude propre. Variante inclinée si nécessaire.",
             tourLabel = tour,
             announceAtSeconds = setOf(10)
@@ -75,24 +75,35 @@ object WorkoutRepository {
         steps += restStep(tour)
 
         steps += repsStep(
-            title = "Fentes",
-            spokenInstruction = "Fentes. Huit à dix par jambe. Buste droit. Vous avez soixante secondes.",
-            durationSeconds = 60,
-            objective = "8 à 10 par jambe",
-            guidance = "Pas trop long. Contrôle à la descente. Faites moins si la technique se dégrade.",
+            title = "Fentes droite",
+            spokenInstruction = "Fentes côté droit. Dix répétitions. Trente secondes. Pied droit devant, jambe gauche en arrière. Buste droit, genou dans l'axe.",
+            durationSeconds = 30,
+            objective = "10 répétitions côté droit",
+            guidance = "Pied droit devant. Descente contrôlée. Remontez en poussant dans le pied droit.",
             tourLabel = tour,
-            announceAtSeconds = setOf(20, 10)
+            announceAtSeconds = setOf(15)
+        )
+        steps += changeSideStep(tour, durationSeconds = 10)
+
+        steps += repsStep(
+            title = "Fentes gauche",
+            spokenInstruction = "Fentes côté gauche. Dix répétitions. Trente secondes. Pied gauche devant, jambe droite en arrière. Même contrôle.",
+            durationSeconds = 30,
+            objective = "10 répétitions côté gauche",
+            guidance = "Pied gauche devant. Gardez le buste droit et le genou dans l'axe.",
+            tourLabel = tour,
+            announceAtSeconds = setOf(15)
         )
         steps += restStep(tour)
 
         steps += timedStep(
             title = "Gainage frontal",
-            spokenInstruction = "Gainage frontal. Trente-cinq secondes. Abdos serrés, fessiers actifs. Ne creusez pas le dos.",
-            durationSeconds = 35,
-            objective = "35 secondes",
+            spokenInstruction = "Gainage frontal. Quarante secondes. Abdos serrés, fessiers actifs. Ne creusez pas le dos.",
+            durationSeconds = 40,
+            objective = "40 secondes",
             guidance = "Respirez. Bassin stable. Arrêtez si douleur anormale.",
             tourLabel = tour,
-            announceAtSeconds = setOf(20, 10)
+            announceAtSeconds = setOf(30, 20, 10)
         )
         steps += restStep(tour)
 
@@ -120,9 +131,9 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Rowing droit",
-            spokenInstruction = "Rowing côté droit. Main gauche et genou gauche en appui, dos plat. Haltère dans la main droite. Tirez le coude droit vers la hanche. Vingt-cinq secondes.",
+            spokenInstruction = "Rowing côté droit. Objectif : quinze répétitions. Main gauche et genou gauche en appui, dos plat. Haltère dans la main droite. Tirez le coude droit vers la hanche. Vingt-cinq secondes.",
             durationSeconds = 25,
-            objective = "Geste propre côté droit",
+            objective = "15 répétitions côté droit",
             guidance = "Dos plat. Le coude recule vers la hanche. Pas d'élan, pas de tirage de biceps.",
             tourLabel = tour,
             announceAtSeconds = setOf(10),
@@ -132,9 +143,9 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Rowing gauche",
-            spokenInstruction = "Rowing côté gauche. Main droite et genou droit en appui, dos plat. Haltère dans la main gauche. Tirez le coude gauche vers la hanche. Vingt-cinq secondes.",
+            spokenInstruction = "Rowing côté gauche. Objectif : quinze répétitions. Main droite et genou droit en appui, dos plat. Haltère dans la main gauche. Tirez le coude gauche vers la hanche. Vingt-cinq secondes.",
             durationSeconds = 25,
-            objective = "Geste propre côté gauche",
+            objective = "15 répétitions côté gauche",
             guidance = "Même consigne. Dos stable. Tirage contrôlé, coude vers la hanche.",
             tourLabel = tour,
             announceAtSeconds = setOf(10),
@@ -144,9 +155,9 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Épaule droite",
-            spokenInstruction = "Développé épaule droite. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Vingt-cinq secondes. Mouvement propre et contrôlé.",
+            spokenInstruction = "Développé épaule droite. Objectif : dix répétitions. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Vingt-cinq secondes. Mouvement propre et contrôlé.",
             durationSeconds = 25,
-            objective = "Pousser proprement côté droit",
+            objective = "10 répétitions côté droit",
             guidance = "Abdos serrés. Ne cambrez pas. Contrôlez la descente jusqu'à l'épaule.",
             tourLabel = tour,
             announceAtSeconds = setOf(10),
@@ -156,9 +167,9 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Épaule gauche",
-            spokenInstruction = "Développé épaule gauche. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Vingt-cinq secondes. Gardez le buste stable.",
+            spokenInstruction = "Développé épaule gauche. Objectif : dix répétitions. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Vingt-cinq secondes. Gardez le buste stable.",
             durationSeconds = 25,
-            objective = "Pousser proprement côté gauche",
+            objective = "10 répétitions côté gauche",
             guidance = "Même consigne. Buste stable, pas de compensation avec le dos.",
             tourLabel = tour,
             announceAtSeconds = setOf(10),
@@ -226,5 +237,19 @@ object WorkoutRepository {
         guidance = "Replacez-vous proprement avant de repartir.",
         tourLabel = tourLabel,
         announceAtSeconds = setOf(5)
+    )
+
+    private fun changeSideStep(
+        tourLabel: String,
+        durationSeconds: Int
+    ) = WorkoutStep(
+        title = "Changement de côté",
+        spokenInstruction = "Changez de côté. Dix secondes.",
+        type = StepType.REST,
+        durationSeconds = durationSeconds,
+        objective = "$durationSeconds secondes",
+        guidance = "Replacez-vous proprement avant de repartir.",
+        tourLabel = tourLabel,
+        announceAtSeconds = emptySet()
     )
 }
