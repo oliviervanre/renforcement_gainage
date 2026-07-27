@@ -1,8 +1,6 @@
 # Renforcement Gainage
 
-Version actuelle : **0.2.1**
-
-Prochaine mise à jour préparée : **0.2.2**
+Version actuelle : **0.2.2**
 
 Application Android Kotlin locale, volontairement simple, destinée à lancer une routine courte de renforcement musculaire et de gainage avec guidage vocal.
 
@@ -60,7 +58,7 @@ Consigne : corps gainé, amplitude propre, variante inclinée si nécessaire
 
 Les exercices unilatéraux sont traités séparément par côté quand cela améliore la qualité du geste ou évite un changement droite/gauche trop précipité.
 
-## Routine actuelle — version 0.2.1
+## Routine actuelle — version 0.2.2
 
 La routine est définie dans `WorkoutRepository.kt`.
 
@@ -74,14 +72,16 @@ Tour 2 / 2
 Fin de séance
 ```
 
-Circuit d'un tour en version 0.2.1 :
+Circuit d'un tour en version 0.2.2 :
 
 ```text
 Pompes
 Récupération
 Squats
 Récupération
-Fentes
+Fentes droite
+Changement de côté
+Fentes gauche
 Récupération
 Gainage frontal
 Récupération
@@ -100,47 +100,11 @@ Changement de côté
 
 Les exercices `Rowing droit`, `Rowing gauche`, `Épaule droite` et `Épaule gauche` sont marqués comme optionnels avec `canSkip = true`, car ils nécessitent une haltère ou une charge adaptée.
 
-## Réglage sportif de la version 0.2.0
+## Réglage sportif de la version 0.2.2
 
-Ajustements issus du premier test en conditions réelles :
+La version 0.2.2 intègre les observations issues des séances réelles, sans changer la logique générale du programme.
 
-```text
-Rowing droit : 25 secondes
-Changement de côté : 15 secondes
-Rowing gauche : 25 secondes
-Récupération : 25 secondes
-
-Épaule droite : 25 secondes
-Changement de côté : 15 secondes
-Épaule gauche : 25 secondes
-```
-
-Consignes intégrées :
-
-```text
-Rowing : appui main + genou opposés, dos plat, coude vers la hanche.
-Épaule : haltère à l'épaule, pousser au-dessus de la tête sans cambrer.
-```
-
-Le choix retenu est de privilégier le geste propre et contrôlé, surtout en fin de circuit, plutôt que d'augmenter trop vite l'intensité.
-
-## Ajustements UX de la version 0.2.1
-
-Ajustements issus des captures sur téléphone :
-
-- titre de l'application descendu pour éviter le conflit visuel avec la caméra frontale ;
-- titre légèrement plus discret ;
-- barre de progression épaissie à `6.dp` ;
-- boutons d'action légèrement remontés ;
-- libellé supérieur de la préparation remplacé par `Avant séance`, afin d'éviter la répétition `Préparation / Préparation`.
-
-Ces changements ne modifient pas la routine sportive ; ils améliorent seulement la lisibilité et l'ergonomie.
-
-## Préparation de la version 0.2.2
-
-La version 0.2.2 est destinée à intégrer les observations de séance sans bouleverser le programme. Les temps de récupération, les décomptes de pause et les autres paramètres non mentionnés ci-dessous restent inchangés.
-
-Ajustements prévus :
+Ajustements intégrés :
 
 ```text
 Pompes
@@ -172,19 +136,21 @@ Développé épaule
 - objectif affiché/vocal : 10 répétitions par bras
 ```
 
-Les squats ne font pas partie des évolutions prévues : le réglage actuel reste adapté, avec 15 répétitions propres dans une fenêtre de 40 secondes.
+Les squats ne font pas partie des évolutions : le réglage reste inchangé, avec 15 répétitions propres dans une fenêtre de 40 secondes.
 
-Consignes vocales envisagées pour les fentes :
+Les temps de récupération, les décomptes de pause et les autres paramètres non mentionnés restent inchangés.
 
-```text
-Fentes côté droit. Dix répétitions. Trente secondes. Pied droit devant, jambe gauche en arrière. Buste droit, genou dans l'axe.
+## Ajustements UX de la version 0.2.1
 
-Changez de côté. Dix secondes.
+Ajustements issus des captures sur téléphone :
 
-Fentes côté gauche. Dix répétitions. Trente secondes. Pied gauche devant, jambe droite en arrière. Même contrôle.
-```
+- titre de l'application descendu pour éviter le conflit visuel avec la caméra frontale ;
+- titre légèrement plus discret ;
+- barre de progression épaissie à `6.dp` ;
+- boutons d'action légèrement remontés ;
+- libellé supérieur de la préparation remplacé par `Avant séance`, afin d'éviter la répétition `Préparation / Préparation`.
 
-Le principe de cette mise à jour est de clarifier les objectifs réellement pratiqués, de mieux guider les fentes et d'ajouter une progression limitée sur le gainage frontal.
+Ces changements ne modifient pas la routine sportive ; ils améliorent seulement la lisibilité et l'ergonomie.
 
 ## Guidage vocal
 
@@ -238,24 +204,17 @@ Les remarques sont stockées dans `PersiflageRepository.kt` sous forme encodée 
 Le numéro de version est défini dans `app/build.gradle.kts` :
 
 ```kotlin
-versionCode = 3
-versionName = "0.2.1"
+versionCode = 4
+versionName = "0.2.2"
 ```
 
 L'écran principal affiche discrètement :
 
 ```text
-v0.2.1
+v0.2.2
 ```
 
 Ce repère permet de vérifier rapidement quelle APK est installée sur le téléphone lors des tests.
-
-Pour la prochaine mise à jour, le passage prévu sera :
-
-```kotlin
-versionCode = 4
-versionName = "0.2.2"
-```
 
 ## Structure technique
 
@@ -410,13 +369,6 @@ Configuration principale actuelle :
 compileSdk = 35
 minSdk = 26
 targetSdk = 35
-versionCode = 3
-versionName = 0.2.1
-```
-
-Configuration prévue pour la prochaine mise à jour :
-
-```text
 versionCode = 4
 versionName = 0.2.2
 ```
