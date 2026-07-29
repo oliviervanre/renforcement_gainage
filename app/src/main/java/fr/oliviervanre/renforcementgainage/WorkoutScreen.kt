@@ -1,5 +1,8 @@
 package fr.oliviervanre.renforcementgainage
 
+import android.graphics.drawable.Animatable
+import android.os.Build
+import android.widget.ImageView
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
@@ -23,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun WorkoutScreen(
@@ -88,6 +93,17 @@ fun WorkoutScreen(
                     textAlign = TextAlign.Center,
                     lineHeight = 50.sp
                 )
+
+                step?.animationResId?.let { animationResId ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        ExerciseAnimation(
+                            drawableResId = animationResId,
+                            isPlaying = state.isRunning && !state.isPaused
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -197,4 +213,36 @@ fun WorkoutScreen(
             }
         }
     }
+}
+
+@Composable
+private fun ExerciseAnimation(
+    drawableResId: Int,
+    isPlaying: Boolean
+) {
+    AndroidView(
+        factory = { context ->
+            ImageView(context).apply {
+                scaleType = ImageView.ScaleType.FIT_CENTER
+                contentDescription = "Démonstration animée du mouvement"
+                setImageResource(drawableResId)
+                tag = drawableResId
+            }
+        },
+        update = { imageView ->
+            if (imageView.tag != drawableResId) {
+                imageView.setImageResource(drawableResId)
+                imageView.tag = drawableResId
+            }
+
+            (imageView.drawable as? Animatable)?.let { animation ->
+                if (isPlaying) {
+                    animation.start()
+                } else {
+                    animation.stop()
+                }
+            }
+        },
+        modifier = Modifier.size(180.dp)
+    )
 }
