@@ -1,6 +1,6 @@
 # Renforcement Gainage
 
-Version actuelle : **0.2.2**
+Version actuelle : **0.2.3**
 
 Application Android Kotlin locale, volontairement simple, destinée à lancer une routine courte de renforcement musculaire et de gainage avec guidage vocal.
 
@@ -51,14 +51,14 @@ Exemple de logique :
 
 ```text
 Pompes
-Objectif : 12 à 15 répétitions propres
-Fenêtre : 30 secondes
-Consigne : corps gainé, amplitude propre, variante inclinée si nécessaire
+Objectif : 15 à 18 répétitions propres
+Fenêtre : 25 secondes
+Consigne : corps gainé, bonne cadence sans précipitation
 ```
 
 Les exercices unilatéraux sont traités séparément par côté quand cela améliore la qualité du geste ou évite un changement droite/gauche trop précipité.
 
-## Routine actuelle — version 0.2.2
+## Routine actuelle — version 0.2.3
 
 La routine est définie dans `WorkoutRepository.kt`.
 
@@ -72,7 +72,7 @@ Tour 2 / 2
 Fin de séance
 ```
 
-Circuit d'un tour en version 0.2.2 :
+Circuit d'un tour en version 0.2.3 :
 
 ```text
 Pompes
@@ -100,45 +100,58 @@ Changement de côté
 
 Les exercices `Rowing droit`, `Rowing gauche`, `Épaule droite` et `Épaule gauche` sont marqués comme optionnels avec `canSkip = true`, car ils nécessitent une haltère ou une charge adaptée.
 
-## Réglage sportif de la version 0.2.2
+## Réglage sportif de la version 0.2.3
 
-La version 0.2.2 intègre les observations issues des séances réelles, sans changer la logique générale du programme.
+La version 0.2.3 ajuste le rythme de séance à partir des observations d'exécution réelle : moins de temps mort sur les pompes, plus de marge sur les exercices techniques, pauses standard plus courtes.
 
-Ajustements intégrés :
+Réglage d'un tour :
 
 ```text
 Pompes
-- durée inchangée : 30 secondes
-- objectif affiché/vocal : 12 à 15 répétitions propres
+- durée : 25 secondes
+- objectif affiché/vocal : 15 à 18 répétitions propres
+- annonce : 10 secondes restantes
+
+Récupérations standard
+- 20 secondes au lieu de 25 secondes
+- annonce : 10 secondes restantes
+
+Squats
+- durée : 45 secondes
+- objectif : 15 répétitions propres
+- annonce : 10 secondes restantes
 
 Fentes
-- remplacement du bloc unique de 60 secondes
-- fentes côté droit : 30 secondes
+- fentes côté droit : 35 secondes
+- objectif : 10 répétitions côté droit
 - annonce unique à 15 secondes restantes
 - changement de côté : 10 secondes
-- fentes côté gauche : 30 secondes
+- fentes côté gauche : 35 secondes
+- objectif : 10 répétitions côté gauche
 - annonce unique à 15 secondes restantes
-- objectif : 10 répétitions par jambe
 
 Gainage frontal
-- passage de 35 à 40 secondes
+- durée : 45 secondes
 - repères vocaux à 30 / 20 / 10 secondes restantes
 
 Gainages latéraux
 - inchangés : 25 secondes par côté
+- annonce : 10 secondes restantes
 
 Rowing
-- durée inchangée : 25 secondes par côté
+- durée : 30 secondes par côté
 - objectif affiché/vocal : 15 répétitions par bras
+- annonce : 10 secondes restantes
 
 Développé épaule
-- durée inchangée : 25 secondes par côté
+- durée : 30 secondes par côté
 - objectif affiché/vocal : 10 répétitions par bras
+- annonce : 10 secondes restantes
 ```
 
-Les squats ne font pas partie des évolutions : le réglage reste inchangé, avec 15 répétitions propres dans une fenêtre de 40 secondes.
+Les changements de côté après rowing et développé épaule restent à 15 secondes. Le changement de côté entre les deux fentes reste à 10 secondes. La pause entre les deux tours reste à 60 secondes.
 
-Les temps de récupération, les décomptes de pause et les autres paramètres non mentionnés restent inchangés.
+Le principe de cette version est de ne pas augmenter brutalement l'intensité : la séance reste orientée santé, qualité du geste et régularité.
 
 ## Ajustements UX de la version 0.2.1
 
@@ -204,14 +217,14 @@ Les remarques sont stockées dans `PersiflageRepository.kt` sous forme encodée 
 Le numéro de version est défini dans `app/build.gradle.kts` :
 
 ```kotlin
-versionCode = 4
-versionName = "0.2.2"
+versionCode = 5
+versionName = "0.2.3"
 ```
 
 L'écran principal affiche discrètement :
 
 ```text
-v0.2.2
+v0.2.3
 ```
 
 Ce repère permet de vérifier rapidement quelle APK est installée sur le téléphone lors des tests.
@@ -289,9 +302,9 @@ C'est le fichier à modifier pour ajuster :
 Exemple :
 
 ```kotlin
-durationSeconds = 30,
-objective = "12 à 15 répétitions propres",
-guidance = "Corps gainé. Amplitude propre. Variante inclinée si nécessaire.",
+durationSeconds = 25,
+objective = "15 à 18 répétitions propres",
+guidance = "Corps gainé. Bonne cadence sans précipitation. Variante inclinée si nécessaire.",
 announceAtSeconds = setOf(10)
 ```
 
@@ -369,8 +382,8 @@ Configuration principale actuelle :
 compileSdk = 35
 minSdk = 26
 targetSdk = 35
-versionCode = 4
-versionName = 0.2.2
+versionCode = 5
+versionName = 0.2.3
 ```
 
 Package Android :
