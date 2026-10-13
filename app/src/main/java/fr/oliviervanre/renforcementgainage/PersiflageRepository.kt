@@ -5,6 +5,8 @@ import kotlin.random.Random
 
 object PersiflageRepository {
 
+    private const val REMARK_CHANCE_DIVISOR = 3
+
     private val encodedRemarks = listOf(
         "RmVpZ25hc3NlIGRlIHBhbHRvcXVldCwgbm91cyBwYXNzZXJvbnMgZG9uYyBjZXQgZXhlcmNpY2Uu",
         "Q2hlciBhbWksIHZvdHJlIHrDqGxlIGNvbm5hw650IHVuZSDDqWNsaXBzZSByZWdyZXR0YWJsZS4=",
@@ -25,11 +27,28 @@ object PersiflageRepository {
         "Vm90cmUgcHJ1ZGVuY2UgYSBwYXJsw6kuIEVsbGUgYXZhaXQgdW4gYWNjZW50IGRlIHBhbnRvdWZsZS4=",
         "T24gYXBwZWxsZXJhIGNlbGEgZGlzY2VybmVtZW50LCBwb3VyIG3DqW5hZ2VyIHZvdHJlIGFtb3VyLXByb3ByZS4=",
         "Vm9pbMOgIHF1aSBuJ2Fqb3V0ZXJhIHJpZW4gw6Agdm90cmUgbMOpZ2VuZGUsIG1haXMgcHLDqXNlcnZlcmEgdm9zIHRlbmRvbnMu",
-        "TCdleGVyY2ljZSBlc3QgcGFzc8OpLCBub24gdmFpbmN1LiBOdWFuY2UgY3J1ZWxsZS4="
+        "TCdleGVyY2ljZSBlc3QgcGFzc8OpLCBub24gdmFpbmN1LiBOdWFuY2UgY3J1ZWxsZS4=",
+        "TGEgRnJhbmNlIGEgcGV1ciA7IHZvcyBxdWFkcmljZXBzLCBldXgsIHNlbWJsZW50IG7DqWdvY2llci4=",
+        "R3JhdmUgbW9tZW50IGRhbnMgY2V0dGUgc8OpYW5jZSA6IGwnZXhlcmNpY2UgZXN0IHN1c3BlbmR1LCBsZSB0YXBpcyByZXRpZW50IHNvbiBzb3VmZmxlLg==",
+        "SWwgZXN0IHRlbXBzIGRlIGxlIGRpcmUgYXZlYyBjYWxtZSA6IGxlIG1vdXZlbWVudCBuZSBzZSBmZXJhIHBhcy4=",
+        "Q2Ugc29pciwgY2hhY3VuIG1lc3VyZSBsYSBmcmFnaWxpdMOpIGRlIGwnZWZmb3J0IHZvbG9udGFpcmUuIE5vdXMgcGFzc29ucy4=",
+        "TGEgc2l0dWF0aW9uIGVzdCBwcsOpb2NjdXBhbnRlLCBtYWlzIHZvcyBhcnRpY3VsYXRpb25zIHJlbWVyY2llbnQgbGEgcsOpZGFjdGlvbi4=",
+        "TGUgcGF5cyBzYXVyYSByZXN0ZXIgZGlnbmUgZGV2YW50IGNlIHJlbm9uY2VtZW50IG11c2N1bGFpcmUu",
+        "w4lkaXRpb24gc3DDqWNpYWxlIDogbCdleGVyY2ljZSByZWN1bGUsIGwnaG9ubmV1ciBkZW1ldXJlIGVuIGRpcmVjdC4=",
+        "TGUgY2FsbWUgZG9pdCBwcsOpdmFsb2lyLiBOb3VzIHNhdXRvbnMgY2V0dGUgw6l0YXBlLg=="
     )
 
     fun randomRemark(): String {
         val encoded = encodedRemarks[Random.nextInt(encodedRemarks.size)]
+        return decode(encoded)
+    }
+
+    fun randomRemarkOrNull(): String? {
+        if (Random.nextInt(REMARK_CHANCE_DIVISOR) != 0) return null
+        return randomRemark()
+    }
+
+    private fun decode(encoded: String): String {
         return String(Base64.decode(encoded, Base64.DEFAULT), Charsets.UTF_8)
     }
 }
