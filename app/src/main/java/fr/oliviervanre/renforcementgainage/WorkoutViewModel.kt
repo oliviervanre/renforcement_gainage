@@ -50,13 +50,23 @@ class WorkoutViewModel : ViewModel() {
     fun skip() {
         val state = _uiState.value
         val step = state.currentStep ?: return
-        if (!state.isRunning || state.isPaused || !step.canSkip) return
+        if (!state.isRunning || state.isPaused || state.isFinished) return
 
         val nextIndex = state.currentStepIndex + 1
         job?.cancel()
+        speechManager?.stop()
 
         job = viewModelScope.launch {
-            speechManager?.speakAndWait(PersiflageRepository.randomRemark())
+            val remark = if (shouldPlayPersiflage(step)) {
+                PersiflageRepository.randomRemarkOrNull()
+            } else {
+                null
+            }
+
+            if (remark != null) {
+                speechManager?.speakAndWait(remark)
+            }
+
             runRoutineFrom(nextIndex)
         }
     }
@@ -138,6 +148,12 @@ class WorkoutViewModel : ViewModel() {
             delay(900)
             speech?.speakAndWait("Attention. Top.")
         }
+    }
+
+    private fun shouldPlayPersiflage(step: WorkoutStep): Boolean {
+        return step.type != StepType.REST &&
+            step.title != "Préparation" &&
+            step.title != "Fin de séance"
     }
 
     private fun finishRoutine() {
