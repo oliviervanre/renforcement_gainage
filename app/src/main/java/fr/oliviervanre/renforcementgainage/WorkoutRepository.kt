@@ -54,9 +54,9 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Pompes",
-            spokenInstruction = "Pompes inclinées ou classiques. Objectif : quinze à dix-huit répétitions propres. Vous avez vingt-cinq secondes. Corps gainé, amplitude propre.",
+            spokenInstruction = "Pompes inclinées ou classiques. Objectif : quinze à vingt répétitions propres. Vous avez vingt-cinq secondes. Corps gainé, amplitude propre.",
             durationSeconds = 25,
-            objective = "15 à 18 répétitions propres",
+            objective = "15 à 20 répétitions propres",
             guidance = "Corps gainé. Bonne cadence sans précipitation. Variante inclinée si nécessaire.",
             tourLabel = tour,
             announceAtSeconds = setOf(10)
@@ -98,12 +98,12 @@ object WorkoutRepository {
 
         steps += timedStep(
             title = "Gainage frontal",
-            spokenInstruction = "Gainage frontal. Quarante-cinq secondes. Abdos serrés, fessiers actifs. Ne creusez pas le dos.",
-            durationSeconds = 45,
-            objective = "45 secondes",
+            spokenInstruction = "Gainage frontal. Cinquante secondes. Abdos serrés, fessiers actifs. Ne creusez pas le dos.",
+            durationSeconds = 50,
+            objective = "50 secondes",
             guidance = "Respirez. Bassin stable. Arrêtez si douleur anormale.",
             tourLabel = tour,
-            announceAtSeconds = setOf(30, 20, 10)
+            announceAtSeconds = setOf(40, 30, 20, 10)
         )
         steps += restStep(tour)
 
