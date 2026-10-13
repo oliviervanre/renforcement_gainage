@@ -59,7 +59,8 @@ object WorkoutRepository {
             objective = "15 à 20 répétitions propres",
             guidance = "Corps gainé. Bonne cadence sans précipitation. Variante inclinée si nécessaire.",
             tourLabel = tour,
-            announceAtSeconds = setOf(10)
+            announceAtSeconds = setOf(10),
+            animationResId = R.drawable.pompes
         )
         steps += restStep(tour)
 
@@ -185,7 +186,8 @@ object WorkoutRepository {
         guidance: String,
         tourLabel: String,
         announceAtSeconds: Set<Int> = setOf(10),
-        canSkip: Boolean = false
+        canSkip: Boolean = false,
+        animationResId: Int? = null
     ) = WorkoutStep(
         title = title,
         spokenInstruction = spokenInstruction,
@@ -195,7 +197,8 @@ object WorkoutRepository {
         guidance = guidance,
         tourLabel = tourLabel,
         announceAtSeconds = announceAtSeconds,
-        canSkip = canSkip
+        canSkip = canSkip,
+        animationResId = animationResId
     )
 
     private fun timedStep(
