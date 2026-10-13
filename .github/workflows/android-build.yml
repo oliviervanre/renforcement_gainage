@@ -21,22 +21,22 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Gradle
-        run: |
-          curl -L https://services.gradle.org/distributions/gradle-8.10.2-bin.zip -o gradle.zip
-          unzip -q gradle.zip
-          echo "$PWD/gradle-8.10.2/bin" >> $GITHUB_PATH
-
-      - name: Show Gradle version
-        run: gradle --version
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Show Android SDK
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
           ls -la "$ANDROID_HOME" || true
+          ls -la "$ANDROID_HOME/platforms" || true
+          ls -la "$ANDROID_HOME/build-tools" || true
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
+
+      - name: Install Android SDK packages
+        run: |
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
