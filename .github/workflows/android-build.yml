@@ -23,20 +23,26 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.10.2
 
-      - name: Show Android SDK
+      - name: Configure Android SDK paths
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
           ls -la "$ANDROID_HOME" || true
-          ls -la "$ANDROID_HOME/platforms" || true
-          ls -la "$ANDROID_HOME/build-tools" || true
+          ls -la "$ANDROID_HOME/cmdline-tools" || true
 
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses || true
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
 
       - name: Install Android SDK packages
         run: |
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Show Gradle version
+        run: gradle --version
 
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
