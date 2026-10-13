@@ -41,7 +41,7 @@ fun WorkoutScreen(
         step?.type == StepType.REPS -> "${state.remainingSeconds} s restantes"
         else -> "${state.remainingSeconds} s"
     }
-    val canSkip = state.isRunning && !state.isPaused && step?.canSkip == true
+    val canSkip = state.isRunning && !state.isPaused && !state.isFinished
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -164,17 +164,6 @@ fun WorkoutScreen(
                             }
                         }
 
-                        if (canSkip) {
-                            OutlinedButton(
-                                onClick = onSkip,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(56.dp)
-                            ) {
-                                Text("Passer", fontSize = 16.sp)
-                            }
-                        }
-
                         OutlinedButton(
                             onClick = onStop,
                             modifier = Modifier
@@ -182,6 +171,19 @@ fun WorkoutScreen(
                                 .height(56.dp)
                         ) {
                             Text("Stop", fontSize = 16.sp)
+                        }
+                    }
+
+                    if (canSkip) {
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        OutlinedButton(
+                            onClick = onSkip,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(48.dp)
+                        ) {
+                            Text("Passer l’étape", fontSize = 15.sp)
                         }
                     }
                 }
