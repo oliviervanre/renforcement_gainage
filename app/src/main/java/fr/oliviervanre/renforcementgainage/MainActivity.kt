@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -32,13 +34,20 @@ class MainActivity : ComponentActivity() {
 
             val state by viewModel.uiState.collectAsState()
 
-            WorkoutScreen(
+            val showGuide = remember { mutableStateOf(false) }
+            if (showGuide.value) {
+                ExerciseGuideScreen(onBack = { showGuide.value = false })
+            } else WorkoutScreen(
                 state = state,
                 onStart = viewModel::start,
                 onPause = viewModel::pause,
                 onResume = viewModel::resume,
                 onStop = viewModel::stop,
-                onSkip = viewModel::skip
+                onSkip = viewModel::skip,
+                onOpenGuide = {
+                    if (state.isRunning && !state.isPaused) viewModel.pause()
+                    showGuide.value = true
+                }
             )
         }
     }
