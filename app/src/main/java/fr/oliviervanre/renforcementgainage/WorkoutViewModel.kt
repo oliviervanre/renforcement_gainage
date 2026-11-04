@@ -145,7 +145,7 @@ class WorkoutViewModel : ViewModel() {
         speech?.speakAndWait(step.spokenInstruction)
 
         if (step.type != StepType.REST && step.title != "Fin de séance") {
-            delay(900)
+            delay(1500)
             speech?.speakAndWait("Attention. Top.")
         }
     }
