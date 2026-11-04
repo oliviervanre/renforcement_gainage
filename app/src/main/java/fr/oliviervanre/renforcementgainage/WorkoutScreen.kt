@@ -31,7 +31,8 @@ fun WorkoutScreen(
     onPause: () -> Unit,
     onResume: () -> Unit,
     onStop: () -> Unit,
-    onSkip: () -> Unit
+    onSkip: () -> Unit,
+    onOpenGuide: () -> Unit
 ) {
     val step = state.currentStep
     val total = step?.durationSeconds?.coerceAtLeast(1) ?: 1
@@ -56,11 +57,19 @@ fun WorkoutScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Renforcement Gainage",
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Renforcement Gainage",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    OutlinedButton(onClick = onOpenGuide) {
+                        Text("Exercices")
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(14.dp))
 
