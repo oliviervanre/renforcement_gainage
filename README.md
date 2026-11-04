@@ -1,6 +1,6 @@
 # Renforcement Gainage
 
-Version actuelle : **0.2.3**
+Version actuelle : **0.2.6**
 
 Application Android Kotlin locale, volontairement simple, destinée à lancer une routine courte de renforcement musculaire et de gainage avec guidage vocal.
 
@@ -19,7 +19,8 @@ L'application guide une séance de renforcement adaptée à un usage personnel :
 - consignes vocales en français ;
 - écran maintenu allumé pendant la séance ;
 - boutons simples : **Démarrer**, **Pause**, **Reprendre**, **Stop** ;
-- bouton **Passer** uniquement sur les exercices nécessitant du matériel ;
+- bouton **Passer l’étape** disponible sur toutes les étapes actives ;
+- bandeau supérieur **Exercices** donnant accès à des fiches techniques hors ligne ;
 - numéro de version affiché discrètement en bas de l'écran.
 
 ## Principes de conception
@@ -165,6 +166,15 @@ Ajustements issus des captures sur téléphone :
 
 Ces changements ne modifient pas la routine sportive ; ils améliorent seulement la lisibilité et l'ergonomie.
 
+## Version 0.2.6 — annonces courtes et fiches d'exercices
+
+- annonces vocales réduites au nom, à l'objectif, au temps imparti et à une ou deux consignes essentielles ;
+- délai avant « Attention. Top. » augmenté de 900 à 1 500 ms ;
+- page de référence hors ligne accessible depuis le bandeau supérieur ;
+- fiches pour pompes, squats, fentes, gainage frontal et latéral, rowing et développé épaule ;
+- le guidage et les fiches sont distincts : aucun changement de routine ni de charges imposées ;
+- l'ouverture des fiches durant une séance suspend la progression, sans reprendre automatiquement.
+
 ## Guidage vocal
 
 Le guidage vocal utilise le moteur Android `TextToSpeech` en français.
@@ -176,7 +186,7 @@ Séquence d'un exercice :
 ```text
 1. annonce complète de l'exercice
 2. attente de fin réelle du TextToSpeech
-3. courte latence d'environ 900 ms
+3. courte latence d'environ 1 500 ms
 4. annonce "Attention. Top."
 5. attente de fin réelle du TextToSpeech
 6. démarrage du chrono
@@ -205,10 +215,9 @@ Rowing gauche
 
 Quand l'utilisateur appuie sur **Passer**, l'application :
 
-1. arrête l'exercice courant ;
-2. prononce une remarque aléatoire ;
-3. attend la fin réelle de la synthèse vocale ;
-4. reprend à l'étape suivante.
+1. arrête l'étape courante et la voix en cours ;
+2. pour un exercice seulement, prononce parfois une remarque (une chance sur trois) ;
+3. poursuit à l'étape suivante, sans remarque sur les pauses.
 
 Les remarques sont stockées dans `PersiflageRepository.kt` sous forme encodée en Base64. Ce n'est pas une protection cryptographique ; c'est seulement destiné à éviter de lire directement les phrases dans le code.
 
@@ -217,14 +226,14 @@ Les remarques sont stockées dans `PersiflageRepository.kt` sous forme encodée 
 Le numéro de version est défini dans `app/build.gradle.kts` :
 
 ```kotlin
-versionCode = 5
-versionName = "0.2.3"
+versionCode = 8
+versionName = "0.2.6"
 ```
 
 L'écran principal affiche discrètement :
 
 ```text
-v0.2.3
+v0.2.6
 ```
 
 Ce repère permet de vérifier rapidement quelle APK est installée sur le téléphone lors des tests.
@@ -340,7 +349,7 @@ Affiche :
 - boutons d'action ;
 - version discrète de l'application.
 
-Le bouton **Passer** n'apparaît que si l'étape courante a `canSkip = true`.
+Le bouton **Passer l’étape** apparaît pendant toute séance active, sauf en pause. Le bouton **Exercices**, en haut de l'écran, ouvre les fiches techniques. L'ouverture en cours de séance met le chrono en pause ; la reprise est manuelle au retour.
 
 ### `SpeechManager.kt`
 
@@ -382,7 +391,7 @@ Configuration principale actuelle :
 compileSdk = 35
 minSdk = 26
 targetSdk = 35
-versionCode = 5
+versionCode = 8
 versionName = 0.2.3
 ```
 
