@@ -7,7 +7,7 @@ object WorkoutRepository {
 
         steps += WorkoutStep(
             title = "Préparation",
-            spokenInstruction = "Prenez quelques secondes pour vous placer. Relâchez les épaules. Début du circuit.",
+            spokenInstruction = "Préparez-vous. Premier exercice : pompes.",
             type = StepType.TIMED,
             durationSeconds = 15,
             objective = "Se placer",
@@ -20,7 +20,7 @@ object WorkoutRepository {
 
         steps += WorkoutStep(
             title = "Pause entre les tours",
-            spokenInstruction = "Pause entre les deux tours. Soixante secondes. Marchez un peu, respirez calmement.",
+            spokenInstruction = "Pause entre les tours. Soixante secondes. Respirez.",
             type = StepType.REST,
             durationSeconds = 60,
             objective = "Récupération",
@@ -33,7 +33,7 @@ object WorkoutRepository {
 
         steps += WorkoutStep(
             title = "Fin de séance",
-            spokenInstruction = "Séance terminée. Respirez calmement. Bon travail.",
+            spokenInstruction = "Séance terminée. Bon travail.",
             type = StepType.TIMED,
             durationSeconds = 20,
             objective = "Retour au calme libre",
@@ -54,7 +54,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Pompes",
-            spokenInstruction = "Pompes inclinées ou classiques. Objectif : quinze à vingt répétitions propres. Vous avez vingt-cinq secondes. Corps gainé, amplitude propre.",
+            spokenInstruction = "Pompes. Quinze à vingt répétitions en vingt-cinq secondes. Corps aligné.",
             durationSeconds = 25,
             objective = "15 à 20 répétitions propres",
             guidance = "Corps gainé. Bonne cadence sans précipitation. Variante inclinée si nécessaire.",
@@ -65,7 +65,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Squats",
-            spokenInstruction = "Squats. Quinze répétitions propres. Descente contrôlée, genoux dans l'axe. Vous avez quarante-cinq secondes.",
+            spokenInstruction = "Squats. Quinze répétitions en quarante-cinq secondes. Genoux dans l'axe.",
             durationSeconds = 45,
             objective = "15 répétitions",
             guidance = "Dos tenu. Appui sur tout le pied. Remontez sans vous précipiter.",
@@ -76,7 +76,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Fentes droite",
-            spokenInstruction = "Fentes côté droit. Dix répétitions. Trente-cinq secondes. Pied droit devant, jambe gauche en arrière. Buste droit, genou dans l'axe.",
+            spokenInstruction = "Fentes droite. Dix répétitions en trente-cinq secondes. Pied droit devant, buste droit.",
             durationSeconds = 35,
             objective = "10 répétitions côté droit",
             guidance = "Pied droit devant. Descente contrôlée. Remontez en poussant dans le pied droit.",
@@ -87,7 +87,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Fentes gauche",
-            spokenInstruction = "Fentes côté gauche. Dix répétitions. Trente-cinq secondes. Pied gauche devant, jambe droite en arrière. Même contrôle.",
+            spokenInstruction = "Fentes gauche. Dix répétitions en trente-cinq secondes. Pied gauche devant, buste droit.",
             durationSeconds = 35,
             objective = "10 répétitions côté gauche",
             guidance = "Pied gauche devant. Gardez le buste droit et le genou dans l'axe.",
@@ -98,7 +98,7 @@ object WorkoutRepository {
 
         steps += timedStep(
             title = "Gainage frontal",
-            spokenInstruction = "Gainage frontal. Cinquante secondes. Abdos serrés, fessiers actifs. Ne creusez pas le dos.",
+            spokenInstruction = "Gainage frontal. Cinquante secondes. Bassin stable, dos droit.",
             durationSeconds = 50,
             objective = "50 secondes",
             guidance = "Respirez. Bassin stable. Arrêtez si douleur anormale.",
@@ -109,7 +109,7 @@ object WorkoutRepository {
 
         steps += timedStep(
             title = "Gainage gauche",
-            spokenInstruction = "Gainage latéral gauche. Vingt-cinq secondes. Bassin haut, nuque neutre.",
+            spokenInstruction = "Gainage latéral gauche. Vingt-cinq secondes. Bassin haut.",
             durationSeconds = 25,
             objective = "25 secondes",
             guidance = "Appui confortable. Variante genoux au sol si besoin.",
@@ -120,7 +120,7 @@ object WorkoutRepository {
 
         steps += timedStep(
             title = "Gainage droit",
-            spokenInstruction = "Gainage latéral droit. Vingt-cinq secondes. Bassin haut, respiration continue.",
+            spokenInstruction = "Gainage latéral droit. Vingt-cinq secondes. Bassin haut.",
             durationSeconds = 25,
             objective = "25 secondes",
             guidance = "Même consigne. Qualité avant durée.",
@@ -131,7 +131,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Rowing droit",
-            spokenInstruction = "Rowing côté droit. Objectif : quinze répétitions. Main gauche et genou gauche en appui, dos plat. Haltère dans la main droite. Tirez le coude droit vers la hanche. Trente secondes.",
+            spokenInstruction = "Rowing droit. Quinze répétitions en trente secondes. Dos plat, coude vers la hanche.",
             durationSeconds = 30,
             objective = "15 répétitions côté droit",
             guidance = "Dos plat. Le coude recule vers la hanche. Pas d'élan, pas de tirage de biceps.",
@@ -143,7 +143,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Rowing gauche",
-            spokenInstruction = "Rowing côté gauche. Objectif : quinze répétitions. Main droite et genou droit en appui, dos plat. Haltère dans la main gauche. Tirez le coude gauche vers la hanche. Trente secondes.",
+            spokenInstruction = "Rowing gauche. Quinze répétitions en trente secondes. Dos plat, coude vers la hanche.",
             durationSeconds = 30,
             objective = "15 répétitions côté gauche",
             guidance = "Même consigne. Dos stable. Tirage contrôlé, coude vers la hanche.",
@@ -155,7 +155,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Épaule droite",
-            spokenInstruction = "Développé épaule droite. Objectif : dix répétitions. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Trente secondes. Mouvement propre et contrôlé.",
+            spokenInstruction = "Développé épaule droite. Dix répétitions en trente secondes. Sans cambrer.",
             durationSeconds = 30,
             objective = "10 répétitions côté droit",
             guidance = "Abdos serrés. Ne cambrez pas. Contrôlez la descente jusqu'à l'épaule.",
@@ -167,7 +167,7 @@ object WorkoutRepository {
 
         steps += repsStep(
             title = "Épaule gauche",
-            spokenInstruction = "Développé épaule gauche. Objectif : dix répétitions. Haltère à l'épaule, poussez au-dessus de la tête sans cambrer. Trente secondes. Gardez le buste stable.",
+            spokenInstruction = "Développé épaule gauche. Dix répétitions en trente secondes. Buste stable, sans cambrer.",
             durationSeconds = 30,
             objective = "10 répétitions côté gauche",
             guidance = "Même consigne. Buste stable, pas de compensation avec le dos.",
